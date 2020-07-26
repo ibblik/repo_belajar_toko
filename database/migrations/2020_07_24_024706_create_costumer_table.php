@@ -15,9 +15,9 @@ class CreateCostumerTable extends Migration
     {
         Schema::create('costumer', function (Blueprint $table) {
             $table->bigIncrements('id_costumer');
-            $table->string('nama_costumrer');
+            $table->string('nama_costumer');
             $table->text('alamat');
-            $table->integer('no_hp');
+            $table->string('no_hp');
         });
     }
 
