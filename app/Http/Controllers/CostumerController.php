@@ -39,4 +39,9 @@ class CostumerController extends Controller
             return Response()->json(['status' => 0]);
         }
     }
+    
+    public function show()
+        {
+            return costumer::all();
+        }
 }

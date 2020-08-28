@@ -39,4 +39,39 @@ class OrderController extends Controller
             return Response()->json(['status' => 0]);
         }
     }
+    public function show()
+        {
+            
+            $data_order = order::join('costumer','order.id_costumer','costumer.id_costumer')
+                                ->join('product','order.id_barang','product.id_barang')
+                                ->select('order.id_order',
+                                         'order.tanggal_pesan',
+                                         'costumer.nama_costumer',
+                                         'costumer.alamat',
+                                         'costumer.no_hp',
+                                         'product.nama_barang')
+                                ->get();
+            return Response()->json($data_order);
+        }
+        public function detail($id)
+        {
+
+            if(order::where('id_order',$id)->exists()){
+                $data_order = order::join('costumer','order.id_costumer','costumer.id_costumer')
+                                ->join('product','order.id_barang','product.id_barang')
+                                ->where('id_order', '=' , $id)
+                                ->select('order.id_order',
+                                         'order.tanggal_pesan',
+                                         'costumer.nama_costumer',
+                                         'costumer.alamat',
+                                         'costumer.no_hp',
+                                         'product.nama_barang')
+                                ->get();
+                return Response()->json($data_order);
+            }
+            else{
+                return Response()->json(['message' => 'ora ketemu']);
+            }
+        }
+    
 }
