@@ -73,5 +73,29 @@ class OrderController extends Controller
                 return Response()->json(['message' => 'ora ketemu']);
             }
         }
+        public function update($id, Request $request)
+            {
+                $validator=Validator::make($request->all(),
+             [
+                'tanggal_pesan' => 'required',
+                'id_costumer' => 'required',
+                'id_barang' => 'required'
+             ]
+            );
+                if($validator->fails()) {
+            return Response()->json($validator->errors());
+            }
+                $ubah = order::where('id_order', $id)->update([
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'id_costumer'=>$request->id_costumer,
+                'id_barang'=>$request->id_barang
+                ]);
+            if($ubah) {
+        return Response()->json(['status' => 1]);
+        }
+        else {
+            return Response()->json(['status' => 0]);
+        }
+     }
     
 }

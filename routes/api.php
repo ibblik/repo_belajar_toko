@@ -26,3 +26,4 @@ Route::get('/product', 'ProductController@show');
 Route::post('/order', 'OrderController@store');
 Route::get('/order', 'OrderController@show');
 Route::get('/order/{id}', 'OrderController@detail');
+Route::put('/order/{id}', 'OrderController@update');
