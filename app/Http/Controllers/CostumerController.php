@@ -44,4 +44,14 @@ class CostumerController extends Controller
         {
             return costumer::all();
         }
+        public function destroy($id)
+        {
+            $hapus = costumer::where('id_costumer',$id)->delete();
+            if($hapus){
+                return Response()->json(['status'=> 1]);
+            } 
+            else{
+                return Response()->json(['status'=>0]);
+            }
+        }
 }
