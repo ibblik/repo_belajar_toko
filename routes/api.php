@@ -19,17 +19,30 @@ Route::post('/login', 'UserController@login');
 
 Route::group(['middleware' => ['jwt.verify']], function ()
 {
-    Route::post('/costumer', 'CostumerController@store');
+    route::group(['middleware' => ['api.superadmin']], function()
+    {
+        Route::delete('/costumer/{id}', 'CostumerController@destroy');
+        Route::delete('/product/{id}', 'ProductController@destroy');
+        Route::delete('/order/{id}', 'OrderController@destroy');
+
+    });
+    route::group(['middleware' => ['api.admin']], function()
+    {
+        Route::post('/costumer', 'CostumerController@store');
+
+        Route::post('/product', 'ProductController@store');
+
+        Route::post('/order', 'OrderController@store');
+        Route::put('/order/{id}', 'OrderController@update');
+
+    });
+    
     Route::get('/costumer', 'CostumerController@show');
-    Route::delete('/costumer/{id}', 'CostumerController@destroy');
-
-    Route::post('/product', 'ProductController@store');
+    
     Route::get('/product', 'ProductController@show');
-    Route::delete('/product/{id}', 'ProductController@destroy');
-
-    Route::post('/order', 'OrderController@store');
+     
     Route::get('/order', 'OrderController@show');
     Route::get('/order/{id}', 'OrderController@detail');
-    Route::put('/order/{id}', 'OrderController@update');
-    Route::delete('/order/{id}', 'OrderController@destroy');
+    
+    
 });
